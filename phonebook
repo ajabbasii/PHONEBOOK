@@ -1,0 +1,146 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+class Contact {
+public:
+    string name;
+    string phone_number;
+    string email;
+
+    // Default constructor
+    Contact() : name(""), phone_number(""), email("") {}
+
+    // Parameterized constructor
+    Contact(string n, string p, string e) : name(n), phone_number(p), email(e) {}
+};
+
+class Phonebook {
+private:
+    Contact contacts[100];
+    int num_contacts;
+
+public:
+    Phonebook() {
+        num_contacts = 0;
+    }
+
+    void add_contact(string name, string phone_number, string email) {
+        if (num_contacts < 100) {
+            contacts[num_contacts] = Contact(name, phone_number, email);
+            num_contacts++;
+            cout << "Contact added successfully!" << endl;
+        } else {
+            cout << "Phonebook is full!" << endl;
+        }
+    }
+
+    void remove_contact(string name) {
+        for (int i = 0; i < num_contacts; i++) {
+            if (contacts[i].name == name) {
+                for (int j = i; j < num_contacts - 1; j++) {
+                    contacts[j] = contacts[j + 1];
+                }
+                num_contacts--;
+                cout << "Contact removed successfully!" << endl;
+                return;
+            }
+        }
+        cout << "Contact not found!" << endl;
+    }
+
+    void search_contact(string name) {
+        for (int i = 0; i < num_contacts; i++) {
+            if (contacts[i].name == name) {
+                cout << "Contact found:" << endl;
+                cout << "Name: " << contacts[i].name << endl;
+                cout << "Phone Number: " << contacts[i].phone_number << endl;
+                cout << "Email: " << contacts[i].email << endl;
+                return;
+            }
+        }
+        cout << "Contact not found!" << endl;
+    }
+
+    void display_contacts() {
+        if (num_contacts == 0) {
+            cout << "Phonebook is empty!" << endl;
+        } else {
+            cout << "Contacts:" << endl;
+            for (int i = 0; i < num_contacts; i++) {
+                cout << "Name: " << contacts[i].name << endl;
+                cout << "Phone Number: " << contacts[i].phone_number << endl;
+                cout << "Email: " << contacts[i].email << endl;
+                cout << "---------------------" << endl;
+            }
+        }
+    }
+};
+
+void display_project_members() {
+    vector<string> project_members = {"Areej", "khansa", "Amna"};
+    cout << "Project Members:" << endl;
+    for (const string &member : project_members) {
+        cout << "- " << member << endl;
+    }
+    cout << "---------------------" << endl;
+}
+
+int main() {
+    Phonebook phonebook;
+
+    while (true) {
+        cout << "Phonebook Menu:" << endl;
+        cout << "1. Add Contact" << endl;
+        cout << "2. Remove Contact" << endl;
+        cout << "3. Search Contact" << endl;
+        cout << "4. Display Contacts" << endl;
+        cout << "5. Project Members" << endl;
+        cout << "6. Quit" << endl;
+
+        int choice;
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.ignore(); // Clear the newline character from the buffer
+
+        switch (choice) {
+            case 1: {
+                string name, phone_number, email;
+                cout << "Enter name: ";
+                getline(cin, name);
+                cout << "Enter phone number: ";
+                getline(cin, phone_number);
+                cout << "Enter email: ";
+                getline(cin, email);
+                phonebook.add_contact(name, phone_number, email);
+                break;
+            }
+            case 2: {
+                string name;
+                cout << "Enter name to remove: ";
+                getline(cin, name);
+                phonebook.remove_contact(name);
+                break;
+            }
+            case 3: {
+                string name;
+                cout << "Enter name to search: ";
+                getline(cin, name);
+                phonebook.search_contact(name);
+                break;
+            }
+            case 4:
+                phonebook.display_contacts();
+                break;
+            case 5:
+                display_project_members();
+                break;
+            case 6:
+                return 0;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+    }
+}
+```
